@@ -121,6 +121,127 @@
           }
         }
       }
+    },
+    "frotas-azul": {
+      "root": "projects/frotas-azul/",
+      "sourceRoot": "projects/frotas-azul/src",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/frotas-azul",
+            "index": "projects/frotas-azul/src/index.html",
+            "main": "projects/frotas-azul/src/main.ts",
+            "polyfills": "projects/frotas-azul/src/polyfills.ts",
+            "tsConfig": "projects/frotas-azul/tsconfig.app.json",
+            "assets": [
+              "projects/frotas-azul/src/favicon.ico",
+              "projects/frotas-azul/src/assets"
+            ],
+            "styles": [
+              "projects/frotas-azul/src/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/font-awesome/css/font-awesome.min.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/frotas-azul/src/environments/environment.ts",
+                  "with": "projects/frotas-azul/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "frotas-azul:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "frotas-azul:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "frotas-azul:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/frotas-azul/src/test.ts",
+            "polyfills": "projects/frotas-azul/src/polyfills.ts",
+            "tsConfig": "projects/frotas-azul/tsconfig.spec.json",
+            "karmaConfig": "projects/frotas-azul/karma.conf.js",
+            "styles": [
+              "projects/frotas-azul/src/styles.css"
+            ],
+            "scripts": [],
+            "assets": [
+              "projects/frotas-azul/src/favicon.ico",
+              "projects/frotas-azul/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/frotas-azul/tsconfig.app.json",
+              "projects/frotas-azul/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "frotas-azul-e2e": {
+      "root": "projects/frotas-azul-e2e/",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/frotas-azul-e2e/protractor.conf.js",
+            "devServerTarget": "frotas-azul:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "frotas-azul:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "projects/frotas-azul-e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "conta-azul"
