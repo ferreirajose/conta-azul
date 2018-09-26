@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+    selector: 'app-admin',
+    templateUrl: 'app.component.html',
+    providers: []
 })
+
+@Injectable()
 export class AppComponent {
-  title = 'app';
+
 }
