@@ -1,0 +1,64 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Adicionar Veiculo</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+
+    <div class="" *ngIf="isVisible">
+      <form [formGroup]="formVehicles" (ngSubmit)="submitForm()">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="placa">Placa</label>
+            <input type="text" class="form-control" id="placa" placeholder="Placa" formControlName="placa">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="marca">Marca</label>
+            <select class="custom-select" formControlName="marca">
+              <option selected>Escolha a Marca</option>
+              <option [value]="marcar.id" *ngFor="let marcar of marcas">{{marcar?.fipe_name}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="modelo">Modelo</label>
+            <select class="custom-select" formControlName="modelo">
+              <option selected>Escolha o Modelo</option>
+              <option [value]="modelo.id" *ngFor="let modelo of modelos">{{modelo?.fipe_marca}}</option>
+            </select>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="foto">Foto</label>
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" id="foto" formControlName="modelo">
+              <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+              <div class="invalid-feedback">Example invalid custom file feedback</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="combustivel">Combustivel</label>
+            <input type="text" class="form-control" id="combustivel" placeholder="Combustivel" formControlName="combustivel">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="valor">Valor</label>
+            <input type="number" class="form-control" id="valor" placeholder="Valor" formControlName="valor">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Salvar Veiculo</button>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+
+  </div>
+</ng-template>
+
+<app-alert></app-alert>
+
+<button class="btn btn-lg btn-success" (click)="open(content)">Novo Carro</button>
