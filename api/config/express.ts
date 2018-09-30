@@ -17,9 +17,16 @@ export default class Express {
   private config(): void {
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(bodyParser.json());
+
     // serving static files
     this.app.use(express.static('src/app/assets'));
 
+    this.app.use((req, res, next) => {
+      res.header('Access-Control-Allow-Origin', '*');
+      res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+      res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+      next();
+    });
   }
 
   public express(): express.Application {
@@ -32,4 +39,4 @@ export default class Express {
 
 }
 
-//export default new Express().app;
+// export default new Express().app;

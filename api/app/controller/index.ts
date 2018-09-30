@@ -59,7 +59,7 @@ export class VehiclesController {
   }
 
   public updateVehicles(req: Request, res: Response): void {
-    DataStoreVehicles.update({ _id: req.params.id }, req.body, (err, numReplaced) => {
+    DataStoreVehicles.update({ _id: req.params.id }, req.body, (err) => {
       if (err) {
         return res.status(500).json({ erro: `Não foi possivel realização operação : ${err}` });
       }

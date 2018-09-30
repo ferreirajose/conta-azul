@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { MarcaInterface } from './form-modal/marca.interface';
-import { ModelosInterface } from './form-modal/modelos.interface';
+import { MarcaInterface } from './interface/marca.interface';
+import { ModelosInterface } from './interface/modelos.interface';
+import { VeiculosInterface } from './interface/veiculos.interface';
 
 
 @Injectable({
@@ -16,9 +17,9 @@ export class VehiclesService {
 
   constructor(private http: HttpClient) {}
 
-  public getAllVehicles(): Observable<any> {
+  public getAllVehicles(): Observable<Array<VeiculosInterface>> {
     const apiUrl = 'http://www.mocky.io/v2/5bb001c93100001000fb60b9';
-    return this.http.get(apiUrl, { withCredentials: true, responseType: 'json'})
+    return this.http.get<Array<VeiculosInterface>>(this.apiUrl, { responseType: 'json'})
       .pipe(
         map(res => res),
         catchError(this.handleError)
@@ -43,11 +44,23 @@ export class VehiclesService {
       );
   }
 
-  public addNewVehicles(dados): Observable<any> {
-    return this.http.post(this.apiUrl, dados, { withCredentials: true, responseType: 'json'})
+  public addNewVehicles(dados): Observable<VeiculosInterface> {
+
+    if (dados.foto === null) {
+        dados.foto = '../assets/no_image_available.svg';
+    }
+
+    return this.http.post<VeiculosInterface>(this.apiUrl, dados, { responseType: 'json'})
       .pipe(
         catchError(this.handleError)
       );
+  }
+
+  public removeVehicles(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`, { responseType: 'json'})
+    .pipe(
+      catchError(this.handleError)
+    );
   }
 
   private handleError(error: HttpErrorResponse) {

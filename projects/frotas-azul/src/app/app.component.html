@@ -15,7 +15,7 @@
       <div class="col">
         <div class="">
           <app-form-modal [isVisible]="isVisible"></app-form-modal>
-          <button class="btn btn-lg btn-danger">Excluir Carro</button>
+          <button class="btn btn-lg btn-danger" (click)="removeItem()">Excluir Carro</button>
         </div>
       </div>
       <div class="col">
@@ -45,13 +45,14 @@
                 <label>
                   <input type="checkbox" value="">
                   <span class="cr"><i class="cr-icon fa fa-check" aria-hidden="true"></i></span>
-                  Placa
+
                 </label>
               </div>
             </th>
+            <th>Placa</th>
             <th>Modelo</th>
             <th>Marca</th>
-            <th>Foto</th>
+            <th  class="text-center">Foto</th>
             <th>Combustivel</th>
             <th>Valor</th>
           </tr>
@@ -61,49 +62,18 @@
             <th scope="row">
               <div class="checkbox">
                 <label>
-                  <input type="checkbox" value="">
+                  <input type="checkbox" [value]="v._id" (change)="onChange($event.target)">
                   <span class="cr"><i class="cr-icon fa fa-check" aria-hidden="true"></i></span>
                 </label>
               </div>
             </th>
+            <td>{{v?.placa}}</td>
             <td>{{v?.modelo}}</td>
             <td>{{v?.marca}}</td>
-            <td><img [src]="v.imagem" alt="" width="80"/></td>
+            <td class="text-center"><img [src]="v.imagem" alt="" width="80"/></td>
             <td>{{v?.combustivel}}</td>
-            <td>{{v?.valor | currency:'BRL':'R$': '1.2-2' }}</td>
+            <td>{{v?.valor | currency:'BRL':'': '1.2-2' }}</td>
           </tr>
-          <!--
-          <tr>
-            <th scope="row">
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox" value="">
-                  <span class="cr"><i class="cr-icon fa fa-check" aria-hidden="true"></i></span>
-                </label>
-              </div>
-            </th>
-            <td>Modelo</td>
-            <td>Marca</td>
-            <td>Foto</td>
-            <td>Combustivel</td>
-            <td>Valor</td>
-          </tr>
-          <tr>
-            <th scope="row">
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox" value="">
-                  <span class="cr"><i class="cr-icon fa fa-check" aria-hidden="true"></i></span>
-                </label>
-              </div>
-            </th>
-            <td>Modelo</td>
-            <td>Marca</td>
-            <td>Foto</td>
-            <td>Combustivel</td>
-            <td>Valor</td>
-          </tr>-->
-
         </tbody>
       </table>
     </div>
