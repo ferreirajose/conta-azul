@@ -18,8 +18,8 @@ export class VehiclesService {
   constructor(private http: HttpClient) {}
 
   public getAllVehicles(): Observable<Array<VeiculosInterface>> {
-    const apiUrl = 'http://www.mocky.io/v2/5bb001c93100001000fb60b9';
-    return this.http.get<Array<VeiculosInterface>>(this.apiUrl, { responseType: 'json'})
+    const apiUrl = 'http://www.mocky.io/v2/5bb154432e00006200927148';
+    return this.http.get<Array<VeiculosInterface>>(apiUrl, { responseType: 'json'})
       .pipe(
         map(res => res),
         catchError(this.handleError)

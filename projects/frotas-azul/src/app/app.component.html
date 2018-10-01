@@ -58,7 +58,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let v of vehicles | filter : searchText">
+          <tr *ngFor="let v of pagedItems | filter : searchText">
             <th scope="row">
               <div class="checkbox">
                 <label>
@@ -79,22 +79,28 @@
     </div>
 
     <nav aria-label="Pagina de Veiculos">
-      <ul class="pagination justify-content-center">
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-            <span class="sr-only">Previous</span>
-          </a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-            <span class="sr-only">Next</span>
-          </a>
-        </li>
+      <ul *ngIf="pager.pages && pager.pages.length" class="pagination justify-content-center">
+          <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+              <a class="page-link" (click)="setPage(1)">Inicio</a>
+          </li>
+          <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+              <a class="page-link" (click)="setPage(pager.currentPage - 1)" aria-label="Anterior">
+                  <span aria-hidden="true">&laquo;</span>
+                  <span class="sr-only">Anterior</span>
+              </a>
+          </li>
+          <li class="page-item" *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+              <a class="page-link" (click)="setPage(page)">{{page}}</a>
+          </li>
+          <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+              <a class="page-link" (click)="setPage(pager.currentPage + 1)" aria-label="Próximo">
+                  <span aria-hidden="true">&raquo;</span>
+                  <span class="sr-only">Prókkkiximo</span>
+              </a>
+          </li>
+          <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+              <a class="page-link" (click)="setPage(pager.totalPages)">Fim</a>
+          </li>
       </ul>
     </nav>
   </div>

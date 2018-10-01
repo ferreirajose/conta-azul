@@ -1,8 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-
-import { VehiclesService } from './vehicles.service';
-import { VoxAlertService } from '@voxtecnologia/alert';
 import { Subscription } from 'rxjs';
+
+import { VoxAlertService } from '@voxtecnologia/alert';
+
+import { PagerService } from './pager.service';
+import { VehiclesService } from './vehicles.service';
 import { EventEmitterService } from './util/event-emitter.service';
 import { VeiculosInterface } from './interface/veiculos.interface';
 
@@ -13,19 +15,23 @@ import { VeiculosInterface } from './interface/veiculos.interface';
 })
 export class AppComponent implements OnInit, OnDestroy {
 
-  public sub: Subscription;
+  public pager: any;
+
   private _isVisible: boolean;
   private _vehicles: Array<VeiculosInterface>;
+  private _pagedItems: Array<VeiculosInterface>;
   private idVehicles: string;
+  private _sub: Subscription;
 
   constructor(
     private alertService: VoxAlertService,
-    private vehiclesService: VehiclesService
+    private vehiclesService: VehiclesService,
+    private pagerService: PagerService
   ) {
-
+    this.pager = {};
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.init();
 
     EventEmitterService.get('addNewVehicles').subscribe(
@@ -37,24 +43,23 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.sub.unsubscribe();
+    this._sub.unsubscribe();
   }
 
-
-  public get vehicles(): Array<VeiculosInterface> {
-    return this._vehicles;
+  public get pagedItems(): Array<VeiculosInterface> {
+    return this._pagedItems;
   }
 
   public get isVisible(): boolean {
     return this._isVisible = true;
   }
 
-  public onChange(event) {
+  public onChange(event): void {
     this.idVehicles = event.value;
   }
 
   public removeItem(): void {
-    this.sub = this.vehiclesService.removeVehicles(this.idVehicles).subscribe(
+    this._sub = this.vehiclesService.removeVehicles(this.idVehicles).subscribe(
       (res) => {
         this.alertService.openModal(res.msn, 'Sucesso', 'success');
         this.init();
@@ -63,10 +68,16 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
+  public setPage(page: number): void {
+    this.pager = this.pagerService.getPager(this._vehicles.length, page);
+    this._pagedItems = this._vehicles.slice(this.pager.startIndex, this.pager.endIndex + 1);
+  }
+
   private init(): void {
-    this.sub = this.vehiclesService.getAllVehicles().subscribe(
+    this._sub = this.vehiclesService.getAllVehicles().subscribe(
       (res) => {
         this._vehicles = res;
+        this.setPage(1);
       },
       (erro) => {
         this.alertService.openModal(erro.message, 'Erro', 'danger');

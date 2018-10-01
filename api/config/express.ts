@@ -33,10 +33,4 @@ export default class Express {
     return this.app;
   }
 
-  // public routes() {
-  //   this.routePrv.routes();
-  // }
-
 }
-
-// export default new Express().app;

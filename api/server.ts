@@ -1,4 +1,3 @@
-// import app from './config/express';
 import Express from './config/express';
 
 const app = new Express();
