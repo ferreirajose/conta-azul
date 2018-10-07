@@ -22,6 +22,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private _pagedItems: Array<VeiculosInterface>;
   private idVehicles: string;
   private _sub: Subscription;
+  private _check: Array<string>;
 
   constructor(
     private alertService: VoxAlertService,
@@ -29,6 +30,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private pagerService: PagerService
   ) {
     this.pager = {};
+    this._check = [];
   }
 
   ngOnInit(): void {
@@ -62,7 +64,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this._sub = this.vehiclesService.removeVehicles(this.idVehicles).subscribe(
       (res) => {
         this.alertService.openModal(res.msn, 'Sucesso', 'success');
-        this.init();
     }, (erro: Error) => {
       this.alertService.openModal(erro.message, 'Erro', 'danger');
     });
@@ -80,7 +81,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.setPage(1);
       },
       (erro) => {
-        this.alertService.openModal(erro.message, 'Erro', 'danger');
+        this.alertService.openModal(erro, 'Erro', 'danger');
       });
   }
 

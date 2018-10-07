@@ -14,24 +14,35 @@
             <label for="placa">Placa</label>
             <input type="text" class="form-control" id="placa" placeholder="Placa" formControlName="placa">
           </div>
+
           <div class="form-group col-md-6">
+            <label for="tiposVeiculos">Tipo do Veiculo</label>
+            <select class="custom-select" formControlName="tiposVeiculos">
+              <option selected>Escolha o Tipo do Veiculo</option>
+              <option [value]="tipo.nome" *ngFor="let tipo of tiposVeiculos ">{{tipo?.nome | titlecase}}</option>
+            </select>
+          </div>
+
+          <div class="form-group col-md-6">
+
             <label for="marca">Marca</label>
             <select class="custom-select" formControlName="marca">
               <option selected>Escolha a Marca</option>
-              <option [value]="marcar.id" *ngFor="let marcar of marcas">{{marcar?.fipe_name}}</option>
+              <option [ngValue]="marcar" *ngFor="let marcar of marcas">{{marcar?.fipe_name}}</option>
             </select>
           </div>
+
+          <div class="form-group col-md-6">
+              <label for="modelo">Modelo</label>
+              <select class="custom-select" formControlName="modelo">
+                <option selected>Escolha o Modelo</option>
+                <option [ngValue]="modelo" *ngFor="let modelo of modelos">{{modelo?.name}}</option>
+              </select>
+            </div>
         </div>
 
         <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="modelo">Modelo</label>
-            <select class="custom-select" formControlName="modelo">
-              <option selected>Escolha o Modelo</option>
-              <option [value]="modelo.id" *ngFor="let modelo of modelos">{{modelo?.fipe_marca}}</option>
-            </select>
-          </div>
-          <div class="form-group col-md-6">
+          <div class="form-group col-md-12">
             <label for="imagem">Foto</label>
             <div class="custom-file">
               <input type="file" class="custom-file-input" id="imagem" formControlName="imagem">

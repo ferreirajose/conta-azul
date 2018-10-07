@@ -12,14 +12,14 @@
   <div class="jumbotron">
     <div class="row mb-3">
 
-      <div class="col">
+      <div class="col-md-8">
         <div class="">
           <app-form-modal [isVisible]="isVisible"></app-form-modal>
           <button class="btn btn-lg btn-danger" (click)="removeItem()">Excluir Carro</button>
         </div>
       </div>
-      <div class="col">
-        <div class="col-md-7">
+      <div class="col-md-4">
+        <div class="">
           <div class="input-group input-group-lg">
             <input type="text" class="form-control" [(ngModel)]="searchText" placeholder="Pesquisar"
             aria-label="Pesquisar"
@@ -43,7 +43,7 @@
             <th scope="col">
               <div class="checkbox">
                 <label>
-                  <input type="checkbox" value="">
+                  <input type="checkbox">
                   <span class="cr"><i class="cr-icon fa fa-check" aria-hidden="true"></i></span>
 
                 </label>
@@ -57,6 +57,7 @@
             <th>Valor</th>
           </tr>
         </thead>
+
         <tbody>
           <tr *ngFor="let v of pagedItems | filter : searchText">
             <th scope="row">
@@ -68,8 +69,8 @@
               </div>
             </th>
             <td>{{v?.placa}}</td>
-            <td>{{v?.modelo}}</td>
-            <td>{{v?.marca}}</td>
+            <td>{{v?.modelo.name}}</td>
+            <td>{{v?.marca.fipe_name}}</td>
             <td class="text-center"><img [src]="v.imagem" alt="" width="80"/></td>
             <td>{{v?.combustivel}}</td>
             <td>{{v?.valor | currency:'BRL':'': '1.2-2' }}</td>

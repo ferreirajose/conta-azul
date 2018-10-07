@@ -15,6 +15,7 @@ import { VehiclesService } from '../vehicles.service';
 import { MarcaInterface } from '../interface/marca.interface';
 import { ModelosInterface } from '../interface/modelos.interface';
 import { EventEmitterService } from '../util/event-emitter.service';
+import { log } from 'util';
 
 @Component({
   selector: 'app-form-modal',
@@ -31,6 +32,7 @@ export class FormModalComponent implements OnInit, OnDestroy {
 
   private _marcars: Array<MarcaInterface>;
   private _modelos: Array<ModelosInterface>;
+  private tipo: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -43,8 +45,21 @@ export class FormModalComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.createForm();
-    this.getMarcas();
-    this.getModelos();
+    // this.getMarcas();
+    // this.getModelos();
+
+    this.formVehicles.get('tiposVeiculos').valueChanges.subscribe(val => {
+      this.tipo = val;
+      console.log(val);
+      this.getMarcas(val);
+    });
+
+
+    this.formVehicles.get('marca').valueChanges.subscribe(val => {
+      console.log(val.id);
+      this.getModelos(this.tipo, val.id);
+    });
+
   }
 
   ngOnDestroy(): void {
@@ -74,16 +89,32 @@ export class FormModalComponent implements OnInit, OnDestroy {
     this.vehiclesService.addNewVehicles(formDados).subscribe(
       (res) => {
         this.alertService.openModal('Resgistro salvo com sucesso', 'Sucesso', 'success');
-        EventEmitterService.get('addNewVehicles').emit();
+        EventEmitterService.get('addNewVehicles').emit(res);
         this.resetaDadosForm();
-
       }, (erro: Error) => {
         this.alertService.openModal(erro.message, 'Erro', 'danger');
       });
   }
 
-  private getMarcas(): void {
-    this.sub = this.vehiclesService.getAllMarcas().subscribe(
+  public get tiposVeiculos() {
+    return [
+      {
+        codigo: 1,
+        nome: 'carros'
+      },
+      {
+        codigo: 2,
+        nome: 'motos'
+      },
+      {
+        codigo: 3,
+        nome: 'caminhoes'
+      }
+    ];
+  }
+
+  private getMarcas(tipo): void {
+    this.sub = this.vehiclesService.getAllMarcasByTipo(tipo).subscribe(
       (marca) => {
         this._marcars = marca;
       },
@@ -92,9 +123,8 @@ export class FormModalComponent implements OnInit, OnDestroy {
       });
   }
 
-  private getModelos(): void {
-    const marca = 1;
-    this.sub = this.vehiclesService.getVehiclesByMarcas(marca).subscribe(
+  private getModelos(tipo, marca): void {
+    this.sub = this.vehiclesService.getVehiclesByMarcas(tipo, marca).subscribe(
       (modelo) => {
         this._modelos = modelo;
       },
@@ -105,6 +135,7 @@ export class FormModalComponent implements OnInit, OnDestroy {
 
   private createForm() {
     this.formVehicles = this.formBuilder.group({
+      tiposVeiculos: [null, Validators.required],
       marca: [null, Validators.required],
       placa: [null, Validators.required],
       modelo: [null, Validators.required],
@@ -116,6 +147,7 @@ export class FormModalComponent implements OnInit, OnDestroy {
 
   private resetaDadosForm(): void {
     this.formVehicles.patchValue({
+      tiposVeiculos: '',
         marca: '',
         placa: '',
         modelo: '',

@@ -6,8 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "dev": "ng serve frotas-azul",
-    "dev1": "ts-node ./api/server.ts",
-    "start2": "nodemon ./api/server.js",
+    "server": "nodemon ./api/server.ts",
+    "project": "npm run dev && npm run server",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

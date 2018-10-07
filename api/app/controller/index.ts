@@ -1,14 +1,7 @@
-// var db = require('../../config/database');
 import { Request, Response } from 'express';
 import DataStoreVehicles from '../../config/database';
 
 export class VehiclesController {
-
-  //private data: DataStoreVehicles;
-
-  constructor() {
-    //this.data = new DataStoreVehicles();
-  }
 
   public getNewVehicles(req: Request, res: Response) {
     DataStoreVehicles.find({}, (err, doc) => {
@@ -25,6 +18,7 @@ export class VehiclesController {
   }
 
   public getNewVehiclesById(req: Request, res: Response): void {
+
     DataStoreVehicles.findOne({ _id: req.params.id }, (err, doc) => {
       if (err) {
         return res.status(500).json({ erro: `Não foi possivel realização operação : ${err}` });
