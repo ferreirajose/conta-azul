@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "dev": "ng serve frotas-azul",
-    "server": "nodemon ./api/server.ts",
+    "server": "ts-node ./api/server.ts",
     "project": "npm run dev && npm run server",
     "test": "ng test",
     "lint": "ng lint",
