@@ -1,8 +1,8 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable, throwError, forkJoin } from 'rxjs';
+import { catchError, map, concatAll } from 'rxjs/operators';
 import { MarcaInterface } from './interface/marca.interface';
 import { ModelosInterface } from './interface/modelos.interface';
 import { VeiculosInterface } from './interface/veiculos.interface';
@@ -56,10 +56,12 @@ export class VehiclesService {
       );
   }
 
-  public removeVehicles(id: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`, { responseType: 'json'})
-    .pipe(
-      catchError(this.handleError)
+  public removeVehicles(ids: Array<string>): Observable<Array<string>> {
+    return <Observable<Array<string>>> forkJoin(
+      ids.map(id => <Observable<Array<string>>> this.http.delete(`${this.apiUrl}/${id}`, { responseType: 'json'}))
+    ).pipe(
+        concatAll(),
+        catchError(this.handleError)
     );
   }
 

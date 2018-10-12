@@ -17,12 +17,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public pager: any;
 
-  private _isVisible: boolean;
   private _vehicles: Array<VeiculosInterface>;
   private _pagedItems: Array<VeiculosInterface>;
-  private idVehicles: string;
   private _sub: Subscription;
   private _check: Array<string>;
+  private _msn: Object;
+  private _msnVisible: boolean;
 
   constructor(
     private alertService: VoxAlertService,
@@ -30,6 +30,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private pagerService: PagerService
   ) {
     this.pager = {};
+    this._msn = {};
     this._check = [];
   }
 
@@ -52,20 +53,29 @@ export class AppComponent implements OnInit, OnDestroy {
     return this._pagedItems;
   }
 
-  public get isVisible(): boolean {
-    return this._isVisible = true;
+  public get msnVisible(): boolean {
+    return this._msnVisible = true;
+  }
+
+  public get message(): Object {
+    return this._msn;
   }
 
   public onChange(event): void {
-    this.idVehicles = event.value;
+    this._check.push(event.value);
   }
 
   public removeItem(): void {
-    this._sub = this.vehiclesService.removeVehicles(this.idVehicles).subscribe(
+    this._sub = this.vehiclesService.removeVehicles(this._check).subscribe(
       (res) => {
-        this.alertService.openModal(res.msn, 'Sucesso', 'success');
+        this._msn['texto'] = res['msn'];
+        this._msn['alert'] = 'success';
+        this._msnVisible = true;
+        this.init();
     }, (erro: Error) => {
-      this.alertService.openModal(erro.message, 'Erro', 'danger');
+        this._msn['texto'] = erro.message;
+        this._msn['alert'] = 'danger';
+        this._msnVisible = true;
     });
   }
 

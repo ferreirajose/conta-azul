@@ -42,3 +42,5 @@ api/data.db
 
 package-lock.json
 api/package-lock.json
+
+*.db
