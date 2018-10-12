@@ -7,7 +7,7 @@
   </div>
   <div class="modal-body">
 
-    <div class="" *ngIf="isVisible">
+    <div class="">
       <form [formGroup]="formVehicles" (ngSubmit)="submitForm()">
         <div class="form-row">
           <div class="form-group col-md-6">
@@ -44,10 +44,12 @@
         <div class="form-row">
           <div class="form-group col-md-12">
             <label for="imagem">Foto</label>
-            <div class="custom-file">
-              <input type="file" class="custom-file-input" id="imagem" formControlName="imagem">
-              <label class="custom-file-label" (change)="onFileChange($event)" #fileInput for="imagem">Choose file...</label>
-              <div class="invalid-feedback">Example invalid custom file feedback</div>
+            <div class="custom-file mb-3">
+              <input type="file" class="custom-file-input" (change)="onFileChange($event)" #fileInput id="imagem" formControlName="imagem">
+              <label class="custom-file-label" for="imagem">Selecione Arquivo</label>
+            </div>
+            <div *ngIf="url">
+              <img [src]="url" width="200" class="img-thumbnail" />
             </div>
           </div>
         </div>

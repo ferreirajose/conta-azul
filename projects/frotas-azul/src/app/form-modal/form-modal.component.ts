@@ -24,15 +24,15 @@ import { log } from 'util';
 })
 export class FormModalComponent implements OnInit, OnDestroy {
 
+  @ViewChild('fileInput') fileInput: ElementRef;
+
   public formVehicles: FormGroup;
   public sub: Subscription;
-
-  @ViewChild('fileInput') fileInput: ElementRef;
-  @Input() public isVisible: boolean;
 
   private _marcars: Array<MarcaInterface>;
   private _modelos: Array<ModelosInterface>;
   private tipo: string;
+  public url: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -40,23 +40,18 @@ export class FormModalComponent implements OnInit, OnDestroy {
     private alertService: VoxAlertService,
     private vehiclesService: VehiclesService
   ) {
-    this.isVisible = false;
+
   }
 
   ngOnInit(): void {
     this.createForm();
-    // this.getMarcas();
-    // this.getModelos();
 
     this.formVehicles.get('tiposVeiculos').valueChanges.subscribe(val => {
       this.tipo = val;
-      console.log(val);
       this.getMarcas(val);
     });
 
-
     this.formVehicles.get('marca').valueChanges.subscribe(val => {
-      console.log(val.id);
       this.getModelos(this.tipo, val.id);
     });
 
@@ -78,25 +73,61 @@ export class FormModalComponent implements OnInit, OnDestroy {
     this.modalService.open(content, { size: 'lg' });
   }
 
-  public onFileChange(event) {
-    const reader = new FileReader();
+  onSubmit() {
+    const formDados = this.formVehicles.value;
+    console.log(formDados);
+
+  }
+
+  readUploadedFileAsText(inputFile): Promise<{}> {
+    const temporaryFileReader = new FileReader();
+
+    return new Promise((resolve, reject) => {
+      temporaryFileReader.onerror = () => {
+        temporaryFileReader.abort();
+        reject(new DOMException('Problema em parsing input file.'));
+      };
+
+      temporaryFileReader.onload = () => {
+        resolve(temporaryFileReader.result);
+      };
+      temporaryFileReader.readAsDataURL(inputFile);
+    });
+  }
+
+
+  async onFileChange(event):Promise<void> {
+    if (!event.target || !event.target.files) {
+      return;
+    }
+
+    const fileList = event.target.files;
+    const latestUploadedFile = fileList.item(fileList.length - 1);
+
+    try {
+      const fileContents = await this.readUploadedFileAsText(latestUploadedFile);
+      this.formVehicles.patchValue({
+        imagem: fileContents
+      });
+      this.url = fileContents;
+    } catch (e) {
+      console.log(e);
+    }
   }
 
 
   public submitForm(): void {
     const formDados = this.formVehicles.value;
-
     this.vehiclesService.addNewVehicles(formDados).subscribe(
       (res) => {
         this.alertService.openModal('Resgistro salvo com sucesso', 'Sucesso', 'success');
-        EventEmitterService.get('addNewVehicles').emit(res);
         this.resetaDadosForm();
       }, (erro: Error) => {
         this.alertService.openModal(erro.message, 'Erro', 'danger');
       });
   }
 
-  public get tiposVeiculos() {
+  public get tiposVeiculos(): Array<Object> {
     return [
       {
         codigo: 1,

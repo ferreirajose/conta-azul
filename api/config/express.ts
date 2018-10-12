@@ -15,8 +15,9 @@ export default class Express {
   }
 
   private config(): void {
-    this.app.use(bodyParser.urlencoded({ extended: true }));
-    this.app.use(bodyParser.json());
+
+    this.app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
+    this.app.use(bodyParser.json({limit: '10mb'}));
 
     // serving static files
     this.app.use(express.static('src/app/assets'));

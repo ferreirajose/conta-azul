@@ -32,17 +32,18 @@ export class AppComponent implements OnInit, OnDestroy {
     this.pager = {};
     this._msn = {};
     this._check = [];
+    this._msnVisible = false;
   }
 
   ngOnInit(): void {
     this.init();
 
-    EventEmitterService.get('addNewVehicles').subscribe(
-      (res) => {
-        this.init();
-    }, (erro) => {
-      this.alertService.openModal(erro, 'Erro', 'danger');
-    });
+    // EventEmitterService.get('addNewVehicles').subscribe(
+    //   (res) => {
+    //     this.init();
+    // }, (erro) => {
+    //   this.alertService.openModal(erro, 'Erro', 'danger');
+    // });
   }
 
   ngOnDestroy(): void {
@@ -54,7 +55,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   public get msnVisible(): boolean {
-    return this._msnVisible = true;
+    return this._msnVisible;
   }
 
   public get message(): Object {

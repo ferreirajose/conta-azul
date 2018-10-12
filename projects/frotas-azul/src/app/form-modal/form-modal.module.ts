@@ -5,6 +5,7 @@ import { VoxAlertModule } from '@voxtecnologia/alert';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { FormModalComponent } from './form-modal.component';
+import { FileValueAccessorDirective } from '../directives/file-control-value-accessor';
 
 @NgModule({
   imports: [
@@ -13,7 +14,7 @@ import { FormModalComponent } from './form-modal.component';
     VoxAlertModule,
     ReactiveFormsModule
   ],
-  declarations: [FormModalComponent],
+  declarations: [FormModalComponent, FileValueAccessorDirective],
   exports: [FormModalComponent]
 })
 export class FormModalModule { }
