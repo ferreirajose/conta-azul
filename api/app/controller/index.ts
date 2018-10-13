@@ -48,13 +48,15 @@ export class VehiclesController {
         return res.status(500).json({ erro: `Não foi possivel realização operação : ${err}` });
       }
 
-      res.status(200).json({ msn: `Removido com sucesso o registro: ${req.params.id}` });
+      res.status(200).json({ msn: `Removido com sucesso o registro` });
     });
   }
 
   public updateVehicles(req: Request, res: Response): void {
-    DataStoreVehicles.update({ _id: req.params.id }, req.body, (err) => {
-      if (err) {
+    const id = req.params.id;
+
+    DataStoreVehicles.update({ _id: id }, req.body, (err) => {
+      if (err || id) {
         return res.status(500).json({ erro: `Não foi possivel realização operação : ${err}` });
       }
 

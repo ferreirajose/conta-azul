@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 
 import { Observable, throwError, forkJoin } from 'rxjs';
 import { catchError, map, concatAll } from 'rxjs/operators';
-import { MarcaInterface } from './interface/marca.interface';
-import { ModelosInterface } from './interface/modelos.interface';
-import { VeiculosInterface } from './interface/veiculos.interface';
+import { MarcaInterface } from '../interface/marca.interface';
+import { ModelosInterface } from '../interface/modelos.interface';
+import { VeiculosInterface } from '../interface/veiculos.interface';
 
 
 @Injectable({
@@ -20,6 +20,14 @@ export class VehiclesService {
   public getAllVehicles(): Observable<Array<VeiculosInterface>> {
     const apiUrl = 'http://www.mocky.io/v2/5bb154432e00006200927148';
     return this.http.get<Array<VeiculosInterface>>(this.apiUrl, { responseType: 'json'})
+      .pipe(
+        map(res => res),
+        catchError(this.handleError)
+      );
+  }
+
+  public getAllVehiclesByID(id: string): Observable<VeiculosInterface> {
+    return this.http.get<VeiculosInterface>(`${this.apiUrl}/${id}`, { responseType: 'json'})
       .pipe(
         map(res => res),
         catchError(this.handleError)
@@ -55,6 +63,14 @@ export class VehiclesService {
         catchError(this.handleError)
       );
   }
+
+  public updateVehicles(dados: VeiculosInterface): Observable<VeiculosInterface> {
+    return this.http.put<VeiculosInterface>(`${this.apiUrl}/${dados._id}`, dados, { responseType: 'json'})
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
 
   public removeVehicles(ids: Array<string>): Observable<Array<string>> {
     return <Observable<Array<string>>> forkJoin(

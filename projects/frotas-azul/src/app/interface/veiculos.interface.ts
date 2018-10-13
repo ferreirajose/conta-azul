@@ -1,9 +1,10 @@
 export interface VeiculosInterface {
-  marca: string;
+  marca: any;
   placa: string;
-  modelo: string;
+  modelo: any;
   foto: string;
   combustivel: string;
-  valor: number;
+  valor: any;
+  tiposVeiculos?: string;
   _id?: string;
 }

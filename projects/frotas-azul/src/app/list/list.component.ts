@@ -1,19 +1,17 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { VoxAlertService } from '@voxtecnologia/alert';
-
-import { PagerService } from './services/pager.service';
-import { VehiclesService } from './services/vehicles.service';
-import { EventEmitterService } from './util/event-emitter.service';
-import { VeiculosInterface } from './interface/veiculos.interface';
+import { VoxAlertService, EventEmitterService } from '@voxtecnologia/alert';
+import { PagerService } from '../services/pager.service';
+import { VehiclesService } from '../services/vehicles.service';
+import { VeiculosInterface } from '../interface/veiculos.interface';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-list',
+  templateUrl: './list.component.html',
+  styleUrls: ['./list.component.css']
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class ListComponent implements OnInit, OnDestroy {
 
   public pager: any;
 
@@ -37,13 +35,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.init();
-
-    // EventEmitterService.get('addNewVehicles').subscribe(
-    //   (res) => {
-    //     this.init();
-    // }, (erro) => {
-    //   this.alertService.openModal(erro, 'Erro', 'danger');
-    // });
   }
 
   ngOnDestroy(): void {
@@ -88,6 +79,8 @@ export class AppComponent implements OnInit, OnDestroy {
   private init(): void {
     this._sub = this.vehiclesService.getAllVehicles().subscribe(
       (res) => {
+
+        res.map(vehicles => vehicles.valor = vehicles.valor.toLocaleString('pt-Br', { style: 'currency', currency: 'BRL' }));
         this._vehicles = res;
         this.setPage(1);
       },
@@ -95,5 +88,4 @@ export class AppComponent implements OnInit, OnDestroy {
         this.alertService.openModal(erro, 'Erro', 'danger');
       });
   }
-
 }

@@ -1,21 +1,19 @@
 import {
   FormGroup,
   FormBuilder,
-  FormControl,
   Validators
 } from '@angular/forms';
-import { Component, OnInit, Input, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 
 import { Subscription } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { VoxAlertService } from '@voxtecnologia/alert';
 
-import { VehiclesService } from '../vehicles.service';
+import { VehiclesService } from '../services/vehicles.service';
 
 import { MarcaInterface } from '../interface/marca.interface';
 import { ModelosInterface } from '../interface/modelos.interface';
-import { EventEmitterService } from '../util/event-emitter.service';
-import { log } from 'util';
+import { Upload } from '../util/upload';
 
 @Component({
   selector: 'app-form-modal',
@@ -47,18 +45,24 @@ export class FormModalComponent implements OnInit, OnDestroy {
     this.createForm();
 
     this.formVehicles.get('tiposVeiculos').valueChanges.subscribe(val => {
-      this.tipo = val;
-      this.getMarcas(val);
+      if (val) {
+        this.tipo = val;
+        this.getMarcas(val);
+      }
     });
 
     this.formVehicles.get('marca').valueChanges.subscribe(val => {
-      this.getModelos(this.tipo, val.id);
+      if (val) {
+        this.getModelos(this.tipo, val.id);
+      }
     });
 
   }
 
   ngOnDestroy(): void {
-    this.sub.unsubscribe();
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
   }
 
   public get marcas(): Array<MarcaInterface> {
@@ -73,30 +77,7 @@ export class FormModalComponent implements OnInit, OnDestroy {
     this.modalService.open(content, { size: 'lg' });
   }
 
-  onSubmit() {
-    const formDados = this.formVehicles.value;
-    console.log(formDados);
-
-  }
-
-  readUploadedFileAsText(inputFile): Promise<{}> {
-    const temporaryFileReader = new FileReader();
-
-    return new Promise((resolve, reject) => {
-      temporaryFileReader.onerror = () => {
-        temporaryFileReader.abort();
-        reject(new DOMException('Problema em parsing input file.'));
-      };
-
-      temporaryFileReader.onload = () => {
-        resolve(temporaryFileReader.result);
-      };
-      temporaryFileReader.readAsDataURL(inputFile);
-    });
-  }
-
-
-  async onFileChange(event):Promise<void> {
+  async onFileChange(event): Promise<void> {
     if (!event.target || !event.target.files) {
       return;
     }
@@ -105,7 +86,7 @@ export class FormModalComponent implements OnInit, OnDestroy {
     const latestUploadedFile = fileList.item(fileList.length - 1);
 
     try {
-      const fileContents = await this.readUploadedFileAsText(latestUploadedFile);
+      const fileContents = await Upload.readUploadedFileAsText(latestUploadedFile);
       this.formVehicles.patchValue({
         imagem: fileContents
       });
@@ -114,7 +95,6 @@ export class FormModalComponent implements OnInit, OnDestroy {
       console.log(e);
     }
   }
-
 
   public submitForm(): void {
     const formDados = this.formVehicles.value;
@@ -164,7 +144,7 @@ export class FormModalComponent implements OnInit, OnDestroy {
       });
   }
 
-  private createForm() {
+  private createForm(): void {
     this.formVehicles = this.formBuilder.group({
       tiposVeiculos: [null, Validators.required],
       marca: [null, Validators.required],
@@ -179,12 +159,12 @@ export class FormModalComponent implements OnInit, OnDestroy {
   private resetaDadosForm(): void {
     this.formVehicles.patchValue({
       tiposVeiculos: '',
-        marca: '',
-        placa: '',
-        modelo: '',
-        imagem: '',
-        combustivel: '',
-        valor: ''
+      marca: '',
+      placa: '',
+      modelo: '',
+      imagem: '',
+      combustivel: '',
+      valor: ''
     });
   }
 
