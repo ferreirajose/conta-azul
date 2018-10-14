@@ -45,7 +45,7 @@
           <div class="form-group col-md-12">
             <label for="imagem">Foto</label>
             <div class="custom-file mb-3">
-              <input type="file" class="custom-file-input" accept="image/png, image/jpeg" (change)="onFileChange($event)" #fileInput id="imagem" formControlName="imagem">
+              <input type="file" class="custom-file-input" appFile accept="image/png, image/jpeg" (change)="onFileChange($event)" #fileInput id="imagem" formControlName="imagem">
               <label class="custom-file-label" for="imagem">Selecione Arquivo</label>
             </div>
             <div *ngIf="url">

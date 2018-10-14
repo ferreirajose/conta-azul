@@ -66,10 +66,10 @@
           <td>{{v?.combustivel}}</td>
           <td>{{v?.valor}}</td>
           <td>
-            <a routerLink="/detail/{{v._id}}">
+            <button class="btn btn-link" (click)="editRouter(v._id)">
               Editar
               <i class="fa fa-pencil-square" aria-hidden="true"></i>
-            </a>
+            </button>
           </td>
         </tr>
       </tbody>

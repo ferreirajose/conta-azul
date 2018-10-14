@@ -2,7 +2,7 @@ import { Directive, HostListener } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
 @Directive({
-    selector: 'input[type=file]',
+    selector: '[appFile]',
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: FileValueAccessorDirective, multi: true}
     ]

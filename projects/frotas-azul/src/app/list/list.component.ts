@@ -5,6 +5,7 @@ import { VoxAlertService, EventEmitterService } from '@voxtecnologia/alert';
 import { PagerService } from '../services/pager.service';
 import { VehiclesService } from '../services/vehicles.service';
 import { VeiculosInterface } from '../interface/veiculos.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list',
@@ -25,7 +26,8 @@ export class ListComponent implements OnInit, OnDestroy {
   constructor(
     private alertService: VoxAlertService,
     private vehiclesService: VehiclesService,
-    private pagerService: PagerService
+    private pagerService: PagerService,
+    private router: Router
   ) {
     this.pager = {};
     this._msn = {};
@@ -51,6 +53,10 @@ export class ListComponent implements OnInit, OnDestroy {
 
   public get message(): Object {
     return this._msn;
+  }
+
+  public editRouter(id: string): void {
+    this.router.navigate([`/edit/${id}`]);
   }
 
   public onChange(event): void {
