@@ -1,11 +1,12 @@
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 
 import { VeiculosInterface } from '../interface/veiculos.interface';
 import { VehiclesService } from '../services/vehicles.service';
-import { Upload } from '../util/upload';
+import { Upload } from '../shared/upload';
+import { Form } from '../shared/form';
 
 @Component({
   selector: 'app-edit',
@@ -14,7 +15,7 @@ import { Upload } from '../util/upload';
 })
 export class EditComponent implements OnInit, OnDestroy {
 
-  public formVehicles: FormGroup;
+  private _formVehicles: Form;
   public sub: Subscription;
   public idVehicles: string;
   public url: any;
@@ -24,10 +25,11 @@ export class EditComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private vehiclesService: VehiclesService
-  ) { }
+  ) {
+    this._formVehicles = new Form(this.formBuilder);
+  }
 
   ngOnInit(): void {
-    this.createForm();
     this.getParams();
   }
 
@@ -35,11 +37,15 @@ export class EditComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  public onVoltar() {
+  public onVoltar(): void {
     this.voltar();
   }
 
-  async onFileChange(event): Promise<void> {
+  public get formVehicles() {
+    return this._formVehicles.actionForm();
+  }
+
+  public async onFileChange(event): Promise<void> {
     if (!event.target || !event.target.files) {
       return;
     }
@@ -49,7 +55,7 @@ export class EditComponent implements OnInit, OnDestroy {
 
     try {
       const fileContents = await Upload.readUploadedFileAsText(latestUploadedFile);
-      this.formVehicles.patchValue({
+      this._formVehicles.actionForm().patchValue({
         imagem: fileContents
       });
       this.url = fileContents;
@@ -59,7 +65,8 @@ export class EditComponent implements OnInit, OnDestroy {
   }
 
   public submitForm(): void {
-    this.vehiclesService.updateVehicles(this.formVehicles.value).subscribe(
+    const formDados = this._formVehicles.actionForm().value;
+    this.vehiclesService.updateVehicles(formDados).subscribe(
       (res) => {
         console.log(res);
     }, (erro: Error) => {
@@ -87,21 +94,8 @@ export class EditComponent implements OnInit, OnDestroy {
     });
   }
 
-  private createForm() {
-    this.formVehicles = this.formBuilder.group({
-      tiposVeiculos: [null, Validators.required],
-      marca: [null, Validators.required],
-      placa: [null, Validators.required],
-      modelo: [null, Validators.required],
-      imagem: [null],
-      combustivel: [null, Validators.required],
-      valor: [null, Validators.required],
-      _id: [null, Validators.required]
-    });
-  }
-
   private edit(vehicles: VeiculosInterface): void {
-    this.formVehicles.patchValue({
+    this._formVehicles.actionForm().patchValue({
         tiposVeiculos: vehicles.tiposVeiculos,
         placa: vehicles.placa,
         marca: vehicles.marca,

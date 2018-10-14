@@ -1,8 +1,4 @@
-import {
-  FormGroup,
-  FormBuilder,
-  Validators
-} from '@angular/forms';
+import { FormBuilder} from '@angular/forms';
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 
 import { Subscription } from 'rxjs';
@@ -13,7 +9,8 @@ import { VehiclesService } from '../services/vehicles.service';
 
 import { MarcaInterface } from '../interface/marca.interface';
 import { ModelosInterface } from '../interface/modelos.interface';
-import { Upload } from '../util/upload';
+import { Upload } from '../shared/upload';
+import { Form } from '../shared/form';
 
 @Component({
   selector: 'app-form-modal',
@@ -24,13 +21,14 @@ export class FormModalComponent implements OnInit, OnDestroy {
 
   @ViewChild('fileInput') fileInput: ElementRef;
 
-  public formVehicles: FormGroup;
+  private _formVehicles: Form;
   public sub: Subscription;
+  public submitted: boolean;
+  public url: any;
 
   private _marcars: Array<MarcaInterface>;
   private _modelos: Array<ModelosInterface>;
   private tipo: string;
-  public url: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -38,31 +36,25 @@ export class FormModalComponent implements OnInit, OnDestroy {
     private alertService: VoxAlertService,
     private vehiclesService: VehiclesService
   ) {
-
+    this._formVehicles = new Form(this.formBuilder);
+    this.submitted = false;
   }
 
   ngOnInit(): void {
-    this.createForm();
 
-    this.formVehicles.get('tiposVeiculos').valueChanges.subscribe(val => {
-      if (val) {
+    this.sub = this._formVehicles.actionForm().get('tiposVeiculos').valueChanges.subscribe(val => {
         this.tipo = val;
         this.getMarcas(val);
-      }
     });
 
-    this.formVehicles.get('marca').valueChanges.subscribe(val => {
-      if (val) {
+    this.sub = this._formVehicles.actionForm().get('marca').valueChanges.subscribe(val => {
         this.getModelos(this.tipo, val.id);
-      }
     });
 
   }
 
   ngOnDestroy(): void {
-    if (this.sub) {
-      this.sub.unsubscribe();
-    }
+    this.sub.unsubscribe();
   }
 
   public get marcas(): Array<MarcaInterface> {
@@ -77,7 +69,11 @@ export class FormModalComponent implements OnInit, OnDestroy {
     this.modalService.open(content, { size: 'lg' });
   }
 
-  async onFileChange(event): Promise<void> {
+  public get formVehicles() {
+    return this._formVehicles.actionForm();
+  }
+
+  public async onFileChange(event): Promise<void> {
     if (!event.target || !event.target.files) {
       return;
     }
@@ -87,7 +83,7 @@ export class FormModalComponent implements OnInit, OnDestroy {
 
     try {
       const fileContents = await Upload.readUploadedFileAsText(latestUploadedFile);
-      this.formVehicles.patchValue({
+      this._formVehicles.actionForm().patchValue({
         imagem: fileContents
       });
       this.url = fileContents;
@@ -97,11 +93,17 @@ export class FormModalComponent implements OnInit, OnDestroy {
   }
 
   public submitForm(): void {
-    const formDados = this.formVehicles.value;
-    this.vehiclesService.addNewVehicles(formDados).subscribe(
+    const formDados = this._formVehicles.actionForm().value;
+    this.submitted = true;
+
+    if (this._formVehicles.actionForm().invalid) {
+      return;
+    }
+
+    this.sub = this.vehiclesService.addNewVehicles(formDados).subscribe(
       (res) => {
         this.alertService.openModal('Resgistro salvo com sucesso', 'Sucesso', 'success');
-        this.resetaDadosForm();
+        this.onReset();
       }, (erro: Error) => {
         this.alertService.openModal(erro.message, 'Erro', 'danger');
       });
@@ -144,28 +146,8 @@ export class FormModalComponent implements OnInit, OnDestroy {
       });
   }
 
-  private createForm(): void {
-    this.formVehicles = this.formBuilder.group({
-      tiposVeiculos: [null, Validators.required],
-      marca: [null, Validators.required],
-      placa: [null, Validators.required],
-      modelo: [null, Validators.required],
-      imagem: [null],
-      combustivel: [null, Validators.required],
-      valor: [null, Validators.required]
-    });
-  }
-
-  private resetaDadosForm(): void {
-    this.formVehicles.patchValue({
-      tiposVeiculos: '',
-      marca: '',
-      placa: '',
-      modelo: '',
-      imagem: '',
-      combustivel: '',
-      valor: ''
-    });
+  private onReset(): void {
+    this._formVehicles.actionForm().reset();
   }
 
 }

@@ -5,7 +5,7 @@ import { VoxAlertService } from '@voxtecnologia/alert';
 
 import { PagerService } from './services/pager.service';
 import { VehiclesService } from './services/vehicles.service';
-import { EventEmitterService } from './util/event-emitter.service';
+import { EventEmitterService } from './shared/event-emitter.service';
 import { VeiculosInterface } from './interface/veiculos.interface';
 
 @Component({
