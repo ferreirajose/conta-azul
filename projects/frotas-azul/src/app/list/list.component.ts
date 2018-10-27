@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription} from 'rxjs';
 
-import { VoxAlertService, EventEmitterService } from '@voxtecnologia/alert';
+import { VoxAlertService } from '@voxtecnologia/alert';
 import { PagerService } from '../services/pager.service';
 import { VehiclesService } from '../services/vehicles.service';
 import { VeiculosInterface } from '../interface/veiculos.interface';
-import { Router } from '@angular/router';
+import { TypeBtn } from '../shared/enum-btn';
 
 @Component({
   selector: 'app-list',
@@ -26,8 +26,7 @@ export class ListComponent implements OnInit, OnDestroy {
   constructor(
     private alertService: VoxAlertService,
     private vehiclesService: VehiclesService,
-    private pagerService: PagerService,
-    private router: Router
+    private pagerService: PagerService
   ) {
     this.pager = {};
     this._msn = {};
@@ -43,6 +42,14 @@ export class ListComponent implements OnInit, OnDestroy {
     this._sub.unsubscribe();
   }
 
+  public get add(): TypeBtn {
+    return TypeBtn.ADD;
+  }
+
+  public get edit(): TypeBtn {
+    return TypeBtn.EDIT;
+  }
+
   public get pagedItems(): Array<VeiculosInterface> {
     return this._pagedItems;
   }
@@ -53,10 +60,6 @@ export class ListComponent implements OnInit, OnDestroy {
 
   public get message(): Object {
     return this._msn;
-  }
-
-  public editRouter(id: string): void {
-    this.router.navigate([`/edit/${id}`]);
   }
 
   public onChange(event): void {

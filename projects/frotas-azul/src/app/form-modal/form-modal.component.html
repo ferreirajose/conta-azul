@@ -1,5 +1,10 @@
 <ng-template #content let-modal>
+
   <div class="modal-header">
+    <div *ngIf="msnVisible" class="alert alert-{{ message.alert }}" role="alert">
+      {{ message.texto }}
+    </div>
+
     <h4 class="modal-title" id="modal-basic-title">Adicionar Veiculo</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
@@ -26,7 +31,7 @@
           <div class="form-group col-md-6">
 
             <label for="marca">Marca</label>
-            <select class="custom-select" formControlName="marca">
+            <select class="custom-select" formControlName="marca" [compareWith]="compareMarca">
               <option selected>Escolha a Marca</option>
               <option [ngValue]="marcar" *ngFor="let marcar of marcas">{{marcar?.fipe_name}}</option>
             </select>
@@ -34,7 +39,7 @@
 
           <div class="form-group col-md-6">
               <label for="modelo">Modelo</label>
-              <select class="custom-select" formControlName="modelo">
+              <select class="custom-select" formControlName="modelo" [compareWith]="compareMarca">
                 <option selected>Escolha o Modelo</option>
                 <option [ngValue]="modelo" *ngFor="let modelo of modelos">{{modelo?.name}}</option>
               </select>
@@ -63,7 +68,7 @@
             <input type="number" class="form-control" id="valor" placeholder="Valor" formControlName="valor">
           </div>
         </div>
-        <button type="submit" class="btn btn-primary">Salvar Veiculo</button>
+        <button type="submit" class="btn btn-primary">{{configBtn.name}} Veiculo</button>
       </form>
     </div>
   </div>
@@ -74,4 +79,13 @@
 
 <app-alert></app-alert>
 
-<button class="btn btn-lg btn-success" (click)="open(content)">Novo Carro</button>
+<!-- <button class="btn btn-link" (click)="open(content)">
+  <i class="fa fa-pencil-square" aria-hidden="true"></i>
+  Editar
+</button> -->
+
+<button [ngClass]="configBtn.type" (click)="open(content, idVehicles)">
+    <i [ngClass]="configBtn.icon" aria-hidden="true"></i>
+    {{configBtn.name}}
+  </button>
+

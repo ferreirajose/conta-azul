@@ -7,7 +7,6 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { ListComponent } from './list/list.component';
-import { EditComponent } from './edit/edit.component';
 import { FormModalComponent } from './form-modal/form-modal.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
@@ -19,7 +18,6 @@ import { FileValueAccessorDirective } from './directives/file-control-value-acce
   declarations: [
     AppComponent,
     ListComponent,
-    EditComponent,
     FormModalComponent,
     PageNotFoundComponent,
     FilterPipe,

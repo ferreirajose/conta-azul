@@ -1,11 +1,13 @@
-<div *ngIf="msnVisible" class="alert alert-{{ message.alert }}" role="alert">
+  <div *ngIf="msnVisible" class="alert alert-{{ message.alert }}" role="alert">
     {{ message.texto }}
   </div>
   <div class="row mb-3">
     <div class="col-md-8">
       <div class="">
-        <app-form-modal></app-form-modal>
-        <button class="btn btn-lg btn-danger ml-3" (click)="removeItem()">Excluir Carro</button>
+        <app-form-modal [typeButton]="add"></app-form-modal>
+        <button class="btn btn-lg btn-danger ml-3" (click)="removeItem()">
+          <i class="fa fa-minus-circle" aria-hidden="true"></i>
+          Excluir Carro</button>
       </div>
     </div>
     <div class="col-md-4">
@@ -66,10 +68,7 @@
           <td>{{v?.combustivel}}</td>
           <td>{{v?.valor}}</td>
           <td>
-            <button class="btn btn-link" (click)="editRouter(v._id)">
-              Editar
-              <i class="fa fa-pencil-square" aria-hidden="true"></i>
-            </button>
+            <app-form-modal [typeButton]="edit" [idVehicles]="v._id"></app-form-modal>
           </td>
         </tr>
       </tbody>
