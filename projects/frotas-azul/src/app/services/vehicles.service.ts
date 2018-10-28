@@ -52,11 +52,8 @@ export class VehiclesService {
       );
   }
 
-  public addNewVehicles(dados): Observable<VeiculosInterface> {
-
-    if (dados.imagem === null) {
-        dados.imagem = '../assets/no_image_available.svg';
-    }
+  public addNewVehicles(dados: VeiculosInterface): Observable<VeiculosInterface> {
+    delete dados._id;
 
     return this.http.post<VeiculosInterface>(this.apiUrl, dados, { responseType: 'json'})
       .pipe(

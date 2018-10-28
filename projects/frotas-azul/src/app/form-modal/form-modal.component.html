@@ -1,14 +1,13 @@
 <ng-template #content let-modal>
 
   <div class="modal-header">
-    <div *ngIf="msnVisible" class="alert alert-{{ message.alert }}" role="alert">
-      {{ message.texto }}
-    </div>
+    <app-message
+      [text]="message.texto"
+      [isVisible]="message.visible"
+      [typeAlert]="message.type">
+    </app-message>
 
-    <h4 class="modal-title" id="modal-basic-title">Adicionar Veiculo</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
+    <h4 class="modal-title" id="modal-basic-title">{{configBtn.name}} Veículo</h4>
   </div>
   <div class="modal-body">
 
@@ -21,9 +20,9 @@
           </div>
 
           <div class="form-group col-md-6">
-            <label for="tiposVeiculos">Tipo do Veiculo</label>
+            <label for="tiposVeiculos">Tipo do Veículo</label>
             <select class="custom-select" formControlName="tiposVeiculos">
-              <option selected>Escolha o Tipo do Veiculo</option>
+              <option selected>Escolha o Tipo do Veículo</option>
               <option [value]="tipo.nome" *ngFor="let tipo of tiposVeiculos ">{{tipo?.nome | titlecase}}</option>
             </select>
           </div>
@@ -48,10 +47,10 @@
 
         <div class="form-row">
           <div class="form-group col-md-12">
-            <label for="imagem">Foto</label>
+            <label for="foto">Foto</label>
             <div class="custom-file mb-3">
-              <input type="file" class="custom-file-input" appFile accept="image/png, image/jpeg" (change)="onFileChange($event)" #fileInput id="imagem" formControlName="imagem">
-              <label class="custom-file-label" for="imagem">Selecione Arquivo</label>
+              <input type="file" class="custom-file-input" appFile accept="image/png, image/jpeg" (change)="onFileChange($event)" #fileInput id="foto" formControlName="foto">
+              <label class="custom-file-label" for="foto">Selecione Arquivo</label>
             </div>
             <div *ngIf="url">
               <img [src]="url" width="200" class="img-thumbnail" />
@@ -68,24 +67,19 @@
             <input type="number" class="form-control" id="valor" placeholder="Valor" formControlName="valor">
           </div>
         </div>
-        <button type="submit" class="btn btn-primary">{{configBtn.name}} Veiculo</button>
+        <button type="submit" class="btn btn-primary">{{configBtn.name}} Veículo</button>
       </form>
     </div>
   </div>
   <div class="modal-footer">
-
+      <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Cross click')">Fechar</button>
   </div>
 </ng-template>
 
 <app-alert></app-alert>
 
-<!-- <button class="btn btn-link" (click)="open(content)">
-  <i class="fa fa-pencil-square" aria-hidden="true"></i>
-  Editar
-</button> -->
-
 <button [ngClass]="configBtn.type" (click)="open(content, idVehicles)">
-    <i [ngClass]="configBtn.icon" aria-hidden="true"></i>
-    {{configBtn.name}}
-  </button>
+  <i [ngClass]="configBtn.icon" aria-hidden="true"></i>
+  {{configBtn.name}}
+</button>
 

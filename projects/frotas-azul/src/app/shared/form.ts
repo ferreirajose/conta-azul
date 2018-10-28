@@ -22,10 +22,10 @@ export class Form {
       marca: [null, Validators.required],
       placa: [null, Validators.required],
       modelo: [null, Validators.required],
-      imagem: [null],
+      foto: [null],
       combustivel: [null, Validators.required],
       valor: [null, Validators.required],
-      _id: [null, Validators.required]
+      _id: ''
     });
   }
 

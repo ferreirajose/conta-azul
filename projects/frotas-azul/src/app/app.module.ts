@@ -6,6 +6,7 @@ import { VoxAlertModule } from '@voxtecnologia/alert';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
+import { AlertModule } from './alert/alert.module';
 import { ListComponent } from './list/list.component';
 import { FormModalComponent } from './form-modal/form-modal.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -30,6 +31,7 @@ import { FileValueAccessorDirective } from './directives/file-control-value-acce
     VoxAlertModule,
     HttpClientModule,
     FormsModule,
+    AlertModule,
     ReactiveFormsModule
   ],
   providers: [appRoutingProviders],

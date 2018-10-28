@@ -1,11 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription} from 'rxjs';
+import { Subscription } from 'rxjs';
 
 import { VoxAlertService } from '@voxtecnologia/alert';
 import { PagerService } from '../services/pager.service';
 import { VehiclesService } from '../services/vehicles.service';
 import { VeiculosInterface } from '../interface/veiculos.interface';
 import { TypeBtn } from '../shared/enum-btn';
+import { EventEmitterService } from '../shared/event-emitter.service';
+import { MessageInterface } from '../interface/message.interface';
 
 @Component({
   selector: 'app-list',
@@ -15,13 +17,12 @@ import { TypeBtn } from '../shared/enum-btn';
 export class ListComponent implements OnInit, OnDestroy {
 
   public pager: any;
-
+  public default: string;
   private _vehicles: Array<VeiculosInterface>;
   private _pagedItems: Array<VeiculosInterface>;
   private _sub: Subscription;
   private _check: Array<string>;
-  private _msn: Object;
-  private _msnVisible: boolean;
+  private _msn: MessageInterface;
 
   constructor(
     private alertService: VoxAlertService,
@@ -29,13 +30,18 @@ export class ListComponent implements OnInit, OnDestroy {
     private pagerService: PagerService
   ) {
     this.pager = {};
-    this._msn = {};
+    this._msn = {
+      type: '',
+      texto: '',
+      visible: false
+    };
     this._check = [];
-    this._msnVisible = false;
+    this.default = '../assets/no_image_available.svg';
   }
 
   ngOnInit(): void {
     this.init();
+    this.updateView();
   }
 
   ngOnDestroy(): void {
@@ -54,11 +60,7 @@ export class ListComponent implements OnInit, OnDestroy {
     return this._pagedItems;
   }
 
-  public get msnVisible(): boolean {
-    return this._msnVisible;
-  }
-
-  public get message(): Object {
+  public get message(): MessageInterface {
     return this._msn;
   }
 
@@ -66,17 +68,22 @@ export class ListComponent implements OnInit, OnDestroy {
     this._check.push(event.value);
   }
 
+
   public removeItem(): void {
-    this._sub = this.vehiclesService.removeVehicles(this._check).subscribe(
+    this.vehiclesService.removeVehicles(this._check).subscribe(
       (res) => {
-        this._msn['texto'] = res['msn'];
-        this._msn['alert'] = 'success';
-        this._msnVisible = true;
+        this._msn = {
+          texto: res['msn'],
+          type: 'success',
+          visible: true
+        };
         this.init();
     }, (erro: Error) => {
-        this._msn['texto'] = erro.message;
-        this._msn['alert'] = 'danger';
-        this._msnVisible = true;
+        this._msn = {
+          texto: erro || erro.message,
+          type: 'danger',
+          visible: true
+        };
     });
   }
 
@@ -96,5 +103,15 @@ export class ListComponent implements OnInit, OnDestroy {
       (erro) => {
         this.alertService.openModal(erro, 'Erro', 'danger');
       });
+  }
+
+  private updateView(): void {
+    EventEmitterService.get('updateView').subscribe(
+      (res) => {
+        this.init();
+    }, (erro) => {
+      this.alertService.openModal(erro, 'Erro', 'danger');
+    });
+
   }
 }
