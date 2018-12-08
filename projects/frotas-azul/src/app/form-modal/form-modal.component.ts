@@ -115,40 +115,41 @@ export class FormModalComponent implements OnInit, OnDestroy {
     const formDados = this._formVehicles.actionForm().value;
 
     if (formDados._id) {
-      this.vehiclesService.updateVehicles(formDados).subscribe(
-        (res) => {
-          this._msn = {
-            texto: res['msn'],
-            type: 'success',
-            visible: true
-          };
-          EventEmitterService.get('updateView').emit();
-      }, (erro: Error) => {
-        this._msn = {
-          texto: erro || erro.message,
-          type: 'danger',
-          visible: true
-        };
-      });
-
-      return;
-    }
-      this.vehiclesService.addNewVehicles(formDados).subscribe(
-        (res) => {
-          this._msn = {
-            texto: res['msn'],
-            type: 'success',
-            visible: true
-          };
-          this.onReset();
-          EventEmitterService.get('updateView').emit();
-        }, (erro: Error) => {
+        this.vehiclesService.updateVehicles(formDados).subscribe(
+          (res) => {
             this._msn = {
-              texto: erro || erro.message,
-              type: 'danger',
+              texto: res['msn'],
+              type: 'success',
               visible: true
             };
+            EventEmitterService.get('updateView').emit();
+        }, (erro: Error) => {
+          this._msn = {
+            texto: erro || erro.message,
+            type: 'danger',
+            visible: true
+          };
         });
+
+        return;
+    }
+
+    this.vehiclesService.addNewVehicles(formDados).subscribe(
+      (res) => {
+        this._msn = {
+          texto: res['msn'],
+          type: 'success',
+          visible: true
+        };
+        EventEmitterService.get('updateView').emit();
+        this.onReset();
+      }, (erro: Error) => {
+          this._msn = {
+            texto: erro || erro.message,
+            type: 'danger',
+            visible: true
+          };
+    });
   }
 
   public get tiposVeiculos(): Array<Object> {
@@ -199,6 +200,7 @@ export class FormModalComponent implements OnInit, OnDestroy {
 
   private onReset(): void {
     this._formVehicles.actionForm().reset();
+    this.url = '';
   }
 
   public get configBtn() {

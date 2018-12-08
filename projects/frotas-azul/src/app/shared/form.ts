@@ -18,6 +18,7 @@ export class Form {
 
   private createForm() {
     this._actionForm = this.builder.group({
+      selected: false,
       tiposVeiculos: [null, Validators.required],
       marca: [null, Validators.required],
       placa: [null, Validators.required],

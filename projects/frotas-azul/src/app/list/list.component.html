@@ -32,15 +32,14 @@
   </div>
 
   <div class="">
-    <table class="table table-hover table-white">
+    <table class="table table-hover table-white" *ngIf="pagedItems.length">
       <thead class="table-white-thead">
         <tr>
           <th scope="col">
             <div class="checkbox">
               <label>
-                <input type="checkbox">
+                <input type="checkbox" [(ngModel)]="selectedAll" (change)="selectAll();">
                 <span class="cr"><i class="cr-icon fa fa-check" aria-hidden="true"></i></span>
-
               </label>
             </div>
           </th>
@@ -59,7 +58,7 @@
           <th scope="row">
             <div class="checkbox">
               <label>
-                <input type="checkbox" [value]="v._id" (change)="onChange($event.target)">
+                <input type="checkbox" [(ngModel)]="v.selected" (change)="checkIfAllSelected()">
                 <span class="cr"><i class="cr-icon fa fa-check" aria-hidden="true"></i></span>
               </label>
             </div>
@@ -76,6 +75,13 @@
         </tr>
       </tbody>
     </table>
+
+    <app-message
+      [text]="'Não há Registros Disponivies'"
+      [isVisible]="!pagedItems.length"
+      [typeAlert]="'info'">
+    </app-message>
+
   </div>
 
   <nav aria-label="Pagina de Veiculos">

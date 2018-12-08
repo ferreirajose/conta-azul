@@ -17,12 +17,15 @@ import { MessageInterface } from '../interface/message.interface';
 export class ListComponent implements OnInit, OnDestroy {
 
   public pager: any;
+  public selectedAll: any;
   public default: string;
+
   private _vehicles: Array<VeiculosInterface>;
   private _pagedItems: Array<VeiculosInterface>;
   private _sub: Subscription;
-  private _check: Array<string>;
   private _msn: MessageInterface;
+
+  private check: Array<string>;
 
   constructor(
     private alertService: VoxAlertService,
@@ -35,7 +38,8 @@ export class ListComponent implements OnInit, OnDestroy {
       texto: '',
       visible: false
     };
-    this._check = [];
+    this.check = [];
+    this._pagedItems = [];
     this.default = '../assets/no_image_available.svg';
   }
 
@@ -64,13 +68,29 @@ export class ListComponent implements OnInit, OnDestroy {
     return this._msn;
   }
 
-  public onChange(event): void {
-    this._check.push(event.value);
+
+  public selectAll(): void {
+    this._pagedItems.forEach(val => {
+      val.selected = this.selectedAll;
+      console.log(val.selected);
+    });
   }
 
+  public checkIfAllSelected(): void {
+    this.selectedAll = this._pagedItems.every(item => {
+      return item.selected === true;
+    });
+  }
 
   public removeItem(): void {
-    this.vehiclesService.removeVehicles(this._check).subscribe(
+
+    this.check = this.pagedItems.filter(item => {
+      return item.selected === true;
+    }).map(val => val._id);
+
+    console.log(this.check);
+
+    this.vehiclesService.removeVehicles(this.check).subscribe(
       (res) => {
         this._msn = {
           texto: res['msn'],

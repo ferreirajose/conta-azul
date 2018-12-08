@@ -5,6 +5,7 @@ export interface VeiculosInterface {
   foto: string;
   combustivel: string;
   valor: any;
+  selected?: boolean;
   tiposVeiculos?: string;
   _id?: string;
 }
