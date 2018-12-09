@@ -1,1 +1,1 @@
-web: node api/server.ts
+web: npm run project
