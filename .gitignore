@@ -44,3 +44,5 @@ package-lock.json
 api/package-lock.json
 
 *.db
+
+api/dist/
