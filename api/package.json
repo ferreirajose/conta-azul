@@ -25,6 +25,7 @@
     "typescript": "^3.1.2"
   },
   "devDependencies": {
-    "@types/nedb": "^1.8.6"
+    "@types/nedb": "^1.8.6",
+    "@types/node": "^10.12.15"
   }
 }
