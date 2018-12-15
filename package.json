@@ -13,7 +13,7 @@
     "install:front": "npm install",
     "install:back": "cd api && npm install",
     "dev:front": "ng serve frotas-azul",
-    "dev:back": "nodemon --watch \"api/\" --exec \"ts-node ./api/server.ts\" -e ts",
+    "dev:back": "nodemon --watch \"api/\" --exec \"ts-node ./api/index.ts\" -e ts",
     "build:front": "ng build",
     "build:back": "(cd api && npm run build)",
     "test": "ng test",

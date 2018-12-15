@@ -1,12 +1,11 @@
-import { Request, Response } from 'express';
+import * as express from 'express';
 import { VehiclesController } from '../controller/index';
-
 export class Routes {
 
-    private express;
+    private express: express.Application;
     private vehicles: VehiclesController;
 
-    constructor(app) {
+    constructor(app: express.Application) {
         this.express = app;
         this.vehicles = new VehiclesController();
         this.routes();

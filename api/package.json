@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "nodemon --watch \"api/\" --exec \"ts-node server.ts\" -e ts",
+    "start": "nodemon --watch \"api/\" --exec \"ts-node index.ts\" -e ts",
     "prod": "npm run build"
   },
   "author": "José Ferreira da Silva",
