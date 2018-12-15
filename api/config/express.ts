@@ -20,7 +20,7 @@ export default class Express {
     this.app.use(bodyParser.json({limit: '10mb'}));
 
     // serving static files
-    this.app.use(express.static('src/app/assets'));
+    this.app.use(express.static('./dist/conta-azul/index.html'));
 
     this.app.use((req, res, next) => {
       res.header('Access-Control-Allow-Origin', '*');

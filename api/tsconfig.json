@@ -5,7 +5,7 @@
       "pretty": true,
       "sourceMap": true,
       "target": "es6",
-      "outDir": "./dist",
+      "outDir": "./server",
       "baseUrl": "."
   },
   "include": [
@@ -13,6 +13,7 @@
   ],
   "exclude": [
       "node_modules",
-      "dist"
+      "dist",
+      "server"
   ]
 }

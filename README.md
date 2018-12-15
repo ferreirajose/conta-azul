@@ -16,13 +16,20 @@ $ cd conta-azul
 Execute o comando abaixo para instalar as dependências do projeto. 
 
 ```
- $ npm run prestart
+ $ npm run start
 ```
 
 ## Executando o projeto
 
 ```
- $ npm run project
+ $ npm run dev
+```
+
+
+## Deploy o projeto
+
+```
+ $ npm run deploy
 ```
 
 ## Visualizando o projeto
