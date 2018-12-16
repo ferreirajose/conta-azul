@@ -19,6 +19,7 @@ export class ListComponent implements OnInit, OnDestroy {
   public pager: any;
   public selectedAll: any;
   public default: string;
+  public searchText: string;
 
   private _vehicles: Array<VeiculosInterface>;
   private _pagedItems: Array<VeiculosInterface>;

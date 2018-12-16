@@ -2,8 +2,11 @@
 
 # compiled output
 /dist
+/server
 /tmp
 /out-tsc
+api/dist/
+api/server/
 
 # dependencies
 /node_modules
@@ -44,6 +47,3 @@ package-lock.json
 api/package-lock.json
 
 *.db
-
-api/dist/
-api/server/

@@ -6,7 +6,7 @@ class DataStoreVehicles {
 
     constructor() {
         this.db = new Datastore({
-            filename: './api/data.db',
+            filename: './data.db',
             autoload: true
         });
     }

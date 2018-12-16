@@ -1,5 +1,6 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
+import * as path from 'path';
 
 import { Routes } from '../app/routes/index';
 
@@ -20,7 +21,8 @@ export default class Express {
     this.app.use(bodyParser.json({limit: '10mb'}));
 
     // serving static files
-    this.app.use(express.static('./dist/conta-azul/index.html'));
+    // this.app.use(express.static('./dist/conta-azul/index.html'));
+    this.app.use(express.static(path.join(__dirname, 'dist')));
 
     this.app.use((req, res, next) => {
       res.header('Access-Control-Allow-Origin', '*');
