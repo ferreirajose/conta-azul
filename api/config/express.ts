@@ -21,8 +21,8 @@ export default class Express {
     this.app.use(bodyParser.json({limit: '10mb'}));
 
     // serving static files 
-    this.app.use('/*', function(res, req) {
-        res.sendFile(path.join(__dirname + '/dist/frotas-azul/index.html));
+    this.app.use('/*', function(req, res) {
+      res.sendFile(path.join(__dirname + '/dist/frotas-azul/index.html'));
     });
     this.app.use(express.static(path.join(__dirname, '/dist')));
 
