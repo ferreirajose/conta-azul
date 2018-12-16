@@ -4,7 +4,7 @@
   "description": "projeto de crud de veiculos",
   "scripts": {
     "ng": "ng",
-    "install:dep": "npm run prestart",
+    "start:init": "npm run prestart",
     "deploy": "npm run prestart && npm run build",
     "start": "node server/index.js",
     "prestart": "npm run install:back && npm run install:front",
@@ -67,6 +67,6 @@
     "karma-jasmine": "~1.1.1",
     "karma-jasmine-html-reporter": "^0.2.2",
     "protractor": "^5.4.1",
-    "tslint": "~5.9.1"
+    "tslint": "~5.9.1",
   }
 }
