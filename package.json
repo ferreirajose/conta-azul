@@ -14,7 +14,7 @@
     "install:back": "cd api && npm install",
     "dev:front": "ng serve frotas-azul",
     "dev:back": "nodemon --watch \"api/\" --exec \"ts-node ./api/index.ts\" -e ts",
-    "build:front": "ng build --prod --project=frotas-azul --base-href https://frota-azul.herokuapp.com/",
+    "build:front": "ng build --prod --project=frotas-azul --base-href https://frota-azul.herokuapp.com",
     "build:back": "(cd api && npm run build)",
     "test": "ng test",
     "lint": "ng lint",
