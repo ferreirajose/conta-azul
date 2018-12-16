@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "npm run prestart",
-    "deploy": "npm run prestart && npm run build && npm run server",
+    "deploy": "npm run prestart && npm run build",
     "server": "node server/index.js",
     "prestart": "npm run install:back && npm run install:front",
     "build": "npm run build:front && npm run build:back",
