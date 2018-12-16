@@ -6,7 +6,7 @@
     "ng": "ng",
     "start:init": "npm run prestart",
     "deploy": "npm run prestart && npm run build",
-    "start": "node server/index.js",
+    "preinstall": "npm install -g @angular/cli @angular/compiler-cli typescript",
     "prestart": "npm run install:back && npm run install:front",
     "build": "npm run postinstall && npm run build:back",
     "dev": "concurrently \"npm run dev:front\" \"npm run dev:back\"",
