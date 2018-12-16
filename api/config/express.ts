@@ -20,9 +20,11 @@ export default class Express {
     this.app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
     this.app.use(bodyParser.json({limit: '10mb'}));
 
-    // serving static files
-    // this.app.use(express.static('./dist/conta-azul/index.html'));
-    this.app.use(express.static(path.join(__dirname, 'dist')));
+    // serving static files 
+    this.app.use('/*', function(res, req) {
+        res.sendFile(path.join(__dirname + '/dist/frotas-azul/index.html));
+    });
+    this.app.use(express.static(path.join(__dirname, '/dist')));
 
     this.app.use((req, res, next) => {
       res.header('Access-Control-Allow-Origin', '*');
