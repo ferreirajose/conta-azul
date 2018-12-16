@@ -4,7 +4,7 @@
   "description": "projeto de crud de veiculos",
   "scripts": {
     "ng": "ng",
-    "start:init": "npm run prestart",
+    "start": "node server/index.js",
     "deploy": "npm run prestart && npm run build",
     "preinstall": "npm install -g @angular/cli @angular/compiler-cli typescript",
     "prestart": "npm run install:back && npm run install:front",
