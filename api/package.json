@@ -1,11 +1,12 @@
 {
   "name": "conta-azul",
   "version": "1.1.0",
-  "description": "projeto de crud de veiculos",
-  "main": "index.js",
+  "description": "projeto de crud de veiculos API",
+  "main": "server/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "nodemon --watch \"api/\" --exec \"ts-node index.ts\" -e ts",
+    "start": "node server/index.js",
+    "watch": "nodemon --watch \"api/\" --exec \"ts-node index.ts\" -e ts",
     "prod": "npm run build"
   },
   "author": "José Ferreira da Silva",
