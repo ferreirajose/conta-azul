@@ -1,4 +1,4 @@
-# ContaAzul
+# Conta Azul
 
 ## Baixar Projeto 
 
@@ -25,11 +25,20 @@ Execute o comando abaixo para instalar as dependências do projeto.
  $ npm run dev
 ```
 
-## Visualizando o projeto
+## Visualizando o projeto DEV
 
 Acesse a URL `http://localhost:4200/`.
 
+## Visualizando o projeto Produção
 
-## Visualizando rota da api
+Acesse a URL `https://frota-azul.herokuapp.com/`.
+
+
+## Visualizando rota da API em DEV
 
 Acesse a URL `http://localhost:3000/v1`.
+
+
+## Visualizando rota da API em Produção
+
+Acesse a URL `https://frota-azul.herokuapp.com/v1`.
