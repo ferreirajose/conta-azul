@@ -38,7 +38,7 @@ export class VehiclesService {
   }
 
   public getAllMarcasByTipo(tipo: string): Observable<Array<MarcaInterface>> {
-    const apiUrl = `http://fipeapi.appspot.com/api/1/${tipo}/marcas.json`;
+    const apiUrl = `https://fipeapi.appspot.com/api/1/${tipo}/marcas.json`;
     return this.http.get<Array<MarcaInterface>>(apiUrl, { responseType: 'json'})
       .pipe(
         map(res => res),
@@ -47,7 +47,7 @@ export class VehiclesService {
   }
 
   public getVehiclesByMarcas(tipo: string, marcar: number): Observable<Array<ModelosInterface>> {
-    const apiUrl = `http://fipeapi.appspot.com/api/1/${tipo}/veiculos/${marcar}.json`;
+    const apiUrl = `https://fipeapi.appspot.com/api/1/${tipo}/veiculos/${marcar}.json`;
     return this.http.get<Array<ModelosInterface>>(apiUrl, { responseType: 'json'})
       .pipe(
         map(res => res),
