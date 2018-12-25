@@ -71,9 +71,8 @@ export class ListComponent implements OnInit, OnDestroy {
 
 
   public selectAll(): void {
-    this._pagedItems.forEach(val => {
+    this._pagedItems.map(val => {
       val.selected = this.selectedAll;
-      console.log(val.selected);
     });
   }
 
@@ -88,8 +87,6 @@ export class ListComponent implements OnInit, OnDestroy {
     this.check = this.pagedItems.filter(item => {
       return item.selected === true;
     }).map(val => val._id);
-
-    console.log(this.check);
 
     this.vehiclesService.removeVehicles(this.check).subscribe(
       (res) => {
@@ -121,17 +118,17 @@ export class ListComponent implements OnInit, OnDestroy {
         this._vehicles = res;
         this.setPage(1);
       },
-      (erro) => {
-        this.alertService.openModal(erro, 'Erro', 'danger');
+      (erro: Error) => {
+        this.alertService.openModal(erro.message, 'Erro', 'danger');
       });
   }
 
   private updateView(): void {
     EventEmitterService.get('updateView').subscribe(
-      (res) => {
+      (res: any) => {
         this.init();
-    }, (erro) => {
-      this.alertService.openModal(erro, 'Erro', 'danger');
+    }, (erro: Error) => {
+      this.alertService.openModal(erro.message, 'Erro', 'danger');
     });
 
   }

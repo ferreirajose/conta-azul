@@ -1,9 +1,16 @@
-{
-  "rulesDirectory": [
+
+  {
+    "rulesDirectory": [
     "node_modules/codelyzer"
   ],
   "rules": {
     "arrow-return-shorthand": true,
+    "ban": [
+      true,
+      {"name": "alert", "message": "por favor, use um modal para exibir alertas"},
+      {"name": ["*", "forEach"], "message": "Considere usar o 'map' ou 'filter'"}
+    ],
+    "binary-expression-operand-order": true,
     "callable-types": true,
     "class-name": true,
     "comment-format": [
@@ -23,10 +30,19 @@
     "import-spacing": true,
     "indent": [
       true,
-      "spaces"
+      "spaces",
+      4
     ],
     "interface-over-type-literal": true,
     "label-position": true,
+    "max-classes-per-file": [
+      true,
+      1
+    ],
+    "max-file-line-count": [
+      true,
+      400
+    ],
     "max-line-length": [
       true,
       140
@@ -37,12 +53,15 @@
       {
         "order": [
           "static-field",
-          "instance-field",
+          "public-instance-field",
+          "private-instance-field",
           "static-method",
-          "instance-method"
+          "public-instance-method",
+          "private-instance-method"
         ]
       }
     ],
+    "new-parens": true,
     "no-arg": true,
     "no-bitwise": true,
     "no-console": [
@@ -51,7 +70,8 @@
       "info",
       "time",
       "timeEnd",
-      "trace"
+      "trace",
+      "log"
     ],
     "no-construct": true,
     "no-debugger": true,
@@ -83,6 +103,7 @@
       "check-whitespace"
     ],
     "prefer-const": true,
+    "prefer-template": [true, "allow-single-concat"],
     "quotemark": [
       true,
       "single"
@@ -92,6 +113,7 @@
       true,
       "always"
     ],
+    "space-within-parens": [true, 0],
     "triple-equals": [
       true,
       "allow-null-check"
