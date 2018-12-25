@@ -5,8 +5,11 @@
   "scripts": {
     "ng": "ng",
     "deploy": "npm run prestart && npm run build",
-    "prestart": "npm install",
-    "build": "ng build --prod --project=frotas-azul --base-href https://frota-azul.herokuapp.com",
+    "preinstall": "npm install -g @angular/cli @angular/compiler-cli typescript",
+    "prestart": "npm run install:front",
+    "build": "npm run postinstall",
+    "install:front": "npm install",
+    "postinstall": "ng build --prod --project=frotas-azul --base-href https://frota-azul.herokuapp.com",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
