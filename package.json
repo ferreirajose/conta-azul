@@ -32,6 +32,7 @@
     "@ng-bootstrap/ng-bootstrap": "^3.2.2",
     "@voxtecnologia/alert": "^2.1.3",
     "typescript": "~2.7.2",
+    "express": "^4.16.4",
     "bootstrap": "^4.1.3",
     "core-js": "^2.5.4",
     "font-awesome": "^4.7.0",
