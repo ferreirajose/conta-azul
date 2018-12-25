@@ -177,6 +177,15 @@ export class FormModalComponent implements OnInit, OnDestroy {
     return ob1 && ob2 ? (ob1.id === ob2.id) : ob1 === ob2;
   }
 
+  public getVehiclesByID(id: string): void {
+    this.vehiclesService.getAllVehiclesByID(id).subscribe(
+      (res) => {
+        this.setValueForms(res);
+    }, (erro: Error) => {
+        this.alertService.openModal(erro.message, 'Erro', 'danger');
+    });
+  }
+
   private getMarcas(tipo): void {
       this.vehiclesService.getAllMarcasByTipo(tipo).subscribe(
         (marca) => {
@@ -218,15 +227,6 @@ export class FormModalComponent implements OnInit, OnDestroy {
         icon: 'fa fa-pencil-square',
         name: 'Editar'
       };
-  }
-
-  public getVehiclesByID(id: string): void {
-    this.vehiclesService.getAllVehiclesByID(id).subscribe(
-      (res) => {
-        this.setValueForms(res);
-    }, (erro: Error) => {
-        this.alertService.openModal(erro.message, 'Erro', 'danger');
-    });
   }
 
   private setValueForms(vehicles: VeiculosInterface): void {
