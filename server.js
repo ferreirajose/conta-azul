@@ -8,8 +8,8 @@ app.use(express.static(__dirname + '/dist/frotas-azul'));
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/dist/frotas-azul/index.html'))
-})
+});
 
 app.listen(PORT, () => {
-  console.log(`Example app listening on port {}`);
-})
+  console.log(`App listening on port ${PORT}`);
+});
