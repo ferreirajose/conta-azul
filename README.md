@@ -25,13 +25,6 @@ Execute o comando abaixo para instalar as dependências do projeto.
  $ npm run dev
 ```
 
-
-## Deploy o projeto
-
-```
- $ npm run deploy
-```
-
 ## Visualizando o projeto
 
 Acesse a URL `http://localhost:4200/`.
