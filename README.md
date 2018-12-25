@@ -1,4 +1,4 @@
-# ContaAzul
+# Conta Azul API
 
 ## Baixar Projeto 
 
@@ -16,26 +16,14 @@ $ cd conta-azul
 Execute o comando abaixo para instalar as dependências do projeto. 
 
 ```
- $ npm run start
+ $ npm install
 ```
 
 ## Executando o projeto
 
 ```
- $ npm run dev
+ $ npm run watch
 ```
-
-
-## Deploy o projeto
-
-```
- $ npm run deploy
-```
-
-## Visualizando o projeto
-
-Acesse a URL `http://localhost:4200/`.
-
 
 ## Visualizando rota da api
 
