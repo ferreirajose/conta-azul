@@ -209,14 +209,16 @@ export class FormModalComponent implements OnInit, OnDestroy {
       return {
         type: 'btn btn-lg btn-success',
         icon: 'fa fa-plus-square',
-        name: 'Adicionar'
+        name: 'Novo Carro',
+        hidden: true
       };
     }
 
     return {
         type: 'btn btn-link',
         icon: 'fa fa-pencil-square',
-        name: 'Editar'
+        name: 'Editar',
+        hidden: true
       };
   }
 

@@ -79,7 +79,7 @@
 <app-alert></app-alert>
 
 <button [ngClass]="configBtn.type" (click)="open(content, idVehicles)">
-  <i [ngClass]="configBtn.icon" aria-hidden="true"></i>
+  <i [ngClass]="configBtn.icon" hidden="configBtn.hidden" aria-hidden="true"></i>
   {{configBtn.name}}
 </button>
 
