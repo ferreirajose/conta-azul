@@ -5,6 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "node server.js",
+    "dev": "ng serve frotas-azul",
     "postinstall": "ng build --prod --project=frotas-azul --base-href https://frota-azul.herokuapp.com",
     "test": "ng test",
     "lint": "ng lint",

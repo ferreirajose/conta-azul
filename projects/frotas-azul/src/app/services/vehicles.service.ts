@@ -85,12 +85,13 @@ export class VehiclesService {
     if (error.error instanceof ErrorEvent) {
       console.error('An error occurred:', error.error.message);
     } else {
+
       console.error(
         `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
+        `body was: ${error.message}`);
     }
 
-    return throwError('Something bad happened; please try again later.');
+    return throwError('Erro Interno \n por favor, tente novamente mais tarde.');
   }
 
 }

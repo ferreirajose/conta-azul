@@ -119,7 +119,8 @@ export class ListComponent implements OnInit, OnDestroy {
         this.setPage(1);
       },
       (erro: Error) => {
-        this.alertService.openModal(erro.message, 'Erro', 'danger');
+        const a = erro;
+        this.alertService.openModal(erro.message || a.toString(), 'Erro', 'danger');
       });
   }
 
@@ -128,7 +129,8 @@ export class ListComponent implements OnInit, OnDestroy {
       (res: any) => {
         this.init();
     }, (erro: Error) => {
-      this.alertService.openModal(erro.message, 'Erro', 'danger');
+        const a = erro;
+        this.alertService.openModal(erro.message || a.toString(), 'Erro', 'danger');
     });
 
   }

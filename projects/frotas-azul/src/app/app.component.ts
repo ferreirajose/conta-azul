@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
+  public default: string;
+
+  constructor() {
+    this.default = '../assets/conta-azul.png';
+  }
+
 }
